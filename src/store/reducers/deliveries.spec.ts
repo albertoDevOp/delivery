@@ -1,11 +1,12 @@
-import deliveriesReducer, { DeliveriesState, search_results, decrement } from 'store/reducers/deliveries'
+import deliveriesReducer, { DeliveriesState } from 'store/reducers/deliveries'
 
 describe('Deliveries Reducer', () => {
 
     const initialState: DeliveriesState = {
-        data: 3,
-        error: false, 
-        loading: false
+        list: [],
+        error: null, 
+        loading: false,
+        selected:  null
     };
 
     it('a', () => {

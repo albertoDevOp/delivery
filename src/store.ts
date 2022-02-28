@@ -1,7 +1,6 @@
 import { Action, configureStore } from '@reduxjs/toolkit'
 
 import { deliveriesReducer } from 'store/reducers'
-import { getMiddleware } from 'store/middlewares'
 
 export const store = configureStore({ 
     reducer: { deliveries: deliveriesReducer } 

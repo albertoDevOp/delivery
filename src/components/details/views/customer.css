@@ -1,0 +1,30 @@
+.block-customer {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin: 20px;
+}
+
+.block-customer_header3 {
+    font-size: 20px;
+    text-align: left;
+}
+
+.block-customer_list {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+}
+
+.block-customer_list li {
+    margin-left: 0;
+    text-align: left;
+    list-style: none;
+}
+
+.block-customer_list_title {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
