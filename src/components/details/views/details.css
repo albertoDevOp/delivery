@@ -7,7 +7,7 @@
     flex: 1 1 auto;
 }
 
-.block-actions button {
+.block-actions button, .bloack-navigation_button {
     background-color: rgb(255, 255, 255);
     margin: 0 10px;
     padding: 7px 20px;
@@ -17,6 +17,11 @@
     font-size: 11px;
     text-transform: uppercase;
     font-weight: 700;
+    cursor: pointer;
+}
+
+.block-actions button[disabled] {
+    opacity: 0.5;
 }
 
 .mark {

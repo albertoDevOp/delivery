@@ -1,34 +1,38 @@
+import { Loader } from 'components/common/loader';
 import { useGeolocation } from 'hooks/geolocation';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { changeStatus, Delivery, findById, findSelected, Status } from 'store/reducers/deliveries';
+import { changeStatus, findById, findSelected } from 'store/reducers/deliveries';
+import { Delivery } from 'models/delivery'
 import { putDelivery } from 'utils/http/putDelivery';
-import { View } from './views/details';
+import { Details } from './views/details';
 
 export function Container(props: any) {
 
-    const [load, setLoad] = useState(false)
-
-    const { delivery_id } = useParams()
-    console.log(delivery_id)
-
+    const { delivery_id } = useParams<string>()
+    
     const delivery = useAppSelector(state => findById(state, delivery_id!))
-    console.log(delivery)
+    
+    const [loading, setLoading] = useState(false)
 
     const selectedId = useAppSelector(state => findSelected(state))
-
-    const coordinates = useGeolocation()
-
+    
+    const { latitude, longitude } = useGeolocation()
+    
     const dispatch = useAppDispatch()
-
-    const sendRequest = (status: Status) => { 
-        setLoad(true)
-        const { latitude, longitude } = coordinates
-        const shipment = { ...delivery!.delivery, ...{ latitude: latitude, longitude: longitude}}
-        let deliver = {...delivery, ...{ delivery: shipment } } as Delivery
-        putDelivery(delivery!, status).then(data => dispatch(changeStatus({ delivery: deliver }))).finally(() => setLoad(false))
+    
+    if(!delivery) {
+        return <Loader />
     }
 
-    return <View selectedId={selectedId} delivery={delivery!} sendRequest={sendRequest} />
+    const sendRequest = (status: string) => { 
+        setLoading(true)
+        const deliver = {...delivery, ...{delivery: { ...delivery.delivery, status, latitude, longitude }}} as Delivery
+        putDelivery(deliver)
+            .then(data => dispatch(changeStatus({ data: delivery })))
+            .finally(() => setLoading(false))
+    }
+
+    return <Details selectedId={selectedId} delivery={delivery!} sendRequest={sendRequest} loading={loading} />
 }

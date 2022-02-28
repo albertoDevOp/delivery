@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useAppDispatch } from 'hooks/store';
-import { activate, Delivery, Status } from 'store/reducers/deliveries';
+import { activate } from 'store/reducers/deliveries';
+import { Delivery, Status } from 'models/delivery'
 import { CustomerView } from './customer';
+import { useNavigate } from 'react-router-dom';
 import './details.css';
 
 interface ViewProps {
     delivery: Delivery,
+    loading: boolean,
     selectedId: string | null,
-    sendRequest: any
+    sendRequest: any,
 }
 
-export function View({ delivery, selectedId, sendRequest }: ViewProps) {
+export function Details({ delivery, loading, selectedId, sendRequest }: ViewProps) {
+
+    const navigate = useNavigate();
+    const handleOnClick = useCallback(() => navigate(`/`, { replace: true }), [navigate]);
 
     const dispatch = useAppDispatch()
 
@@ -30,27 +36,41 @@ export function View({ delivery, selectedId, sendRequest }: ViewProps) {
             </header>
             <div className="container">
                 <CustomerView customer={delivery.customer} />
-                <div className="block-actions">
-                    {!selectedId &&
-                        <button
-                            type="button"
-                            onClick={() => dispatch(activate({ delivery: delivery }))}>
-                            Activate
-                        </button>
-                    }
-                    {isSelected
-                        && <button
-                            type="button"
-                            onClick={() => sendRequest(Status.delivered)}>
-                            deliver
-                        </button>}
-                    {isSelected
-                        && <button
-                            type="button"
-                            onClick={() => sendRequest(Status.undelivered)}>
-                            cancel
-                        </button>}
-                </div>
+                {
+                    delivery.delivery.status === Status.idle ?
+                        (<div className="block-actions">
+                            {!selectedId &&
+                                <button
+                                    type="button"
+                                    disabled={loading}
+                                    onClick={() => dispatch(activate({ delivery: delivery }))}>
+                                    Activate
+                                </button>
+                            }
+                            {isSelected
+                                && <button
+                                    type="button"
+                                    disabled={loading}
+                                    onClick={() => sendRequest(Status.delivered)}>
+                                    deliver
+                                </button>}
+                            {isSelected
+                                && <button
+                                    type="button"
+                                    disabled={loading}
+                                    onClick={() => sendRequest(Status.undelivered)}>
+                                    cancel
+                                </button>}
+                        </div>) : <div className="block-actions">This item has been delivered or cancelled</div>
+                }
+            </div>
+            <div>
+                <button
+                    className="bloack-navigation_button"
+                    type="button"
+                    onClick={handleOnClick}>
+                    Index
+                </button>
             </div>
         </div>
     );

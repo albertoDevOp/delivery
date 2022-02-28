@@ -1,32 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { DeliveryComponent } from 'components/Delivery'
-import { request } from 'setup'
+import { request } from 'utils/http/setup'
 import type { RootState } from 'store'
-export interface Customer {
-    name: string,
-    address: string,
-    city: string,
-    zipCode: string,
-    latitude: number | null,
-    longitude: number | null
-}
+import { Delivery } from 'models/delivery'
 
-export enum Status {
-    delivered = "delivered",
-    undelivered = "undelivered",
-    idle = "idle"
-}
-export interface Shipment {
-    status: Status,
-    latitude: number | null,
-    longitude: number | null
-}
-export interface Delivery {
-    id: string,
-    client: string,
-    customer: Customer,
-    delivery: Shipment
-}
 
 interface Deliveries extends Array<Delivery> {}
 
@@ -47,8 +23,8 @@ const deliveriesSlice = createSlice({
             state.selected = action.payload.delivery.id
         },
         changeStatus(state, action) {
-            const deliver = state.list.find(d => d.id == action.payload.id)
-            deliver!.delivery = { ...deliver?.delivery, ...action.payload.delivery }
+            const deliver = state.list.find(d => d.id === action.payload.data.id)
+            deliver!.delivery = { ...action.payload.delivery }
         }
     },
     extraReducers(builder) {
@@ -76,7 +52,7 @@ export const selectAllDeliveries = (state: RootState) => state.deliveries.list
 export const selectStatus = (state: RootState) => state.deliveries.loading
 export const selectError = (state: RootState) => state.deliveries.error
 
-export const findById = (state: RootState, id: string) => state.deliveries.list.find(delivery => delivery.id == id)
+export const findById = (state: RootState, id: string) => state.deliveries.list.find(delivery => delivery.id === id)
 export const findSelected = (state: RootState) => state.deliveries.selected
 
 export default deliveriesSlice.reducer

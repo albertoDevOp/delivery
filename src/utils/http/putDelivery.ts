@@ -1,6 +1,6 @@
-import { Delivery, Shipment, Status } from "store/reducers/deliveries";
+import { Delivery } from "models/delivery";
 import { put } from "./request";
 
-export function putDelivery(delivery: Delivery, status: Status) {
+export function putDelivery(delivery: Delivery) {
     return put(`/deliveries/${delivery.id}`, delivery.delivery)
 }
