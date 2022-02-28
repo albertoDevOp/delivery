@@ -1,0 +1,4 @@
+.block-matrix {
+    display: flex;
+    flex-flow: row wrap;
+}

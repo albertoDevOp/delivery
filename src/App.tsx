@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {
-  ListDeliveries
-} from 'components/ListDeliveries'
+  List
+} from 'components/list'
 import './App.css';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import { fetchDeliveries, selectStatus } from 'store/reducers/deliveries'
@@ -20,12 +20,12 @@ function App() {
     if (!loading) {
       dispatch(fetchDeliveries())
     }
-  }, [dispatch])
+  }, [])
 
   return (
-    <div className="App">
+    <div className="App" data-testid="App">
       <Routes>
-        <Route path="/" element={<ListDeliveries />} />
+        <Route path="/" element={<List />} />
         <Route path="delivery/:delivery_id" element={
           <React.Suspense fallback={<>...</>}>
             <Details />

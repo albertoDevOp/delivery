@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClimbingBoxLoader } from 'react-spinners';
 
-export function LoaderComponent(props: any) {
+export function Loader(props: any) {
 
     return (
         <div className="App">

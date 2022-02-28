@@ -1,0 +1,29 @@
+.block-matrix_element{
+    flex: 1 0 auto;
+    flex-basis: 25%;
+    border: 1px solid rgba(87, 82, 82, 1);
+    border-radius: 3px;
+    margin: 5px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.block-matrix_element:hover{
+    background-color: rgba(87, 82, 82, 0.2);
+}
+
+.block-matrix_element p{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.block-matrix_element-selected {
+    border-radius: 50%;
+    background-color: rgb(73, 218, 218);
+    margin-left: 10px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}

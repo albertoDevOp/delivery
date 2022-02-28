@@ -1,5 +1,5 @@
 import React from 'react';
-import { Customer } from 'store/reducers/deliveries';
+import { Customer } from 'models/delivery'
 import './customer.css'
 
 interface ViewProps {
