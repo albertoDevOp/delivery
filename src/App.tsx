@@ -8,6 +8,8 @@ import { fetchDeliveries, selectStatus } from 'store/reducers/deliveries'
 import { Container as DeliveryDetails } from 'components/details';
 import { Route, Routes } from 'react-router-dom';
 
+const NoMatch = () => <div>no match</div>
+
 const Details = React.lazy(() => import("./components/details").then(module => ({ default: DeliveryDetails })));
 
 function App() {
@@ -26,18 +28,16 @@ function App() {
     <div className="App" data-testid="App">
       <Routes>
         <Route path="/" element={<List />} />
-        <Route path="delivery/:delivery_id" element={
+        <Route path="/delivery/:delivery_id" element={
           <React.Suspense fallback={<>...</>}>
             <Details />
           </React.Suspense>
         } />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </div>
   );
 }
 
 export default App;
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
-}
 

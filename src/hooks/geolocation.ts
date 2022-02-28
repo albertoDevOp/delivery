@@ -21,8 +21,10 @@ export const useGeolocation = () => {
     };
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(success, error);
-        navigator.geolocation.watchPosition(success, error, { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000 })
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+            navigator.geolocation.watchPosition(success, error, { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000 })
+        }
     }, [])
     return coordinates
 }

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/store';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { changeStatus, findById, findSelected } from 'store/reducers/deliveries';
-import { Delivery } from 'models/delivery'
+import { Delivery, Shipment, Status } from 'models/delivery'
 import { putDelivery } from 'utils/http/putDelivery';
 import { Details } from './views/details';
 
@@ -26,11 +26,11 @@ export function Container(props: any) {
         return <Loader />
     }
 
-    const sendRequest = (status: string) => { 
+    const sendRequest = (status: Status) => { 
         setLoading(true)
-        const deliver = {...delivery, ...{delivery: { ...delivery.delivery, status, latitude, longitude }}} as Delivery
-        putDelivery(deliver)
-            .then(data => dispatch(changeStatus({ data: delivery })))
+        const shipment: Shipment =  { ...delivery.delivery, status, latitude, longitude }
+        putDelivery(delivery_id!, shipment)
+            .then(() => dispatch(changeStatus({ data: { id: delivery_id, shipment }})))
             .finally(() => setLoading(false))
     }
 

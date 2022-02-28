@@ -20,11 +20,13 @@ const deliveriesSlice = createSlice({
     initialState, 
     reducers: {
         activate(state, action) {
-            state.selected = action.payload.delivery.id
+            return { ...state, selected: action.payload.delivery.id }
         },
-        changeStatus(state, action) {
-            const deliver = state.list.find(d => d.id === action.payload.data.id)
-            deliver!.delivery = { ...action.payload.delivery }
+        changeStatus(state, action): any {
+            const { id, shipment } = action.payload.data
+            const delivery = state.list.find(d => d.id === id)
+            const list = state.list.map(elem => elem.id == id ? { ...delivery, delivery: shipment } : elem);
+            return { ...state, list: list }
         }
     },
     extraReducers(builder) {

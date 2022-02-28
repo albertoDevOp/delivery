@@ -20,6 +20,8 @@ export function Details({ delivery, loading, selectedId, sendRequest }: ViewProp
 
     const dispatch = useAppDispatch()
 
+    console.log(selectedId, delivery.id)
+
     const isSelected = selectedId && selectedId == delivery.id
 
     return (
@@ -41,6 +43,7 @@ export function Details({ delivery, loading, selectedId, sendRequest }: ViewProp
                         (<div className="block-actions">
                             {!selectedId &&
                                 <button
+                                    className='button-activate'
                                     type="button"
                                     disabled={loading}
                                     onClick={() => dispatch(activate({ delivery: delivery }))}>
@@ -49,6 +52,7 @@ export function Details({ delivery, loading, selectedId, sendRequest }: ViewProp
                             }
                             {isSelected
                                 && <button
+                                    className='button-deliver'
                                     type="button"
                                     disabled={loading}
                                     onClick={() => sendRequest(Status.delivered)}>
@@ -56,6 +60,7 @@ export function Details({ delivery, loading, selectedId, sendRequest }: ViewProp
                                 </button>}
                             {isSelected
                                 && <button
+                                    className='button-cancel'
                                     type="button"
                                     disabled={loading}
                                     onClick={() => sendRequest(Status.undelivered)}>
